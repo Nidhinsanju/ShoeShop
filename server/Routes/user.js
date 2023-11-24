@@ -43,6 +43,11 @@ router.get("/mycart", async (req, res) => {
   res.json({ products });
 });
 
+router.get("/me", async (req, res) => {
+  const object = "hello";
+  res.json({ object });
+});
+
 router.post("/products/addproduct", authenticateJwt, async (req, res) => {
   const product = await Product.findById(req.params.productId);
 
