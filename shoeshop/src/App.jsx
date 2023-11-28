@@ -12,6 +12,7 @@ import {
 import Signup from "./Signup";
 import MyAccount from "./MyAccount";
 import Blog from "./Blog";
+import Shop from "./Shop";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/shophub/cart" element={<Cart />}></Route>
             <Route path="/shophub/myaccount/" element={<MyAccount />}></Route>
             <Route path="/shophub/blog/" element={<Blog />}></Route>
+            <Route path="/shophub/shop/" element={<Shop />}></Route>
           </Routes>
         </Router>
       </div>

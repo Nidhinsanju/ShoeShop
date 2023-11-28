@@ -5,7 +5,7 @@ export const pages = [
   },
   {
     title: "Shop",
-    link: "",
+    link: "/shophub/shop",
   },
   {
     title: "Blog",
