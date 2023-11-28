@@ -10,6 +10,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Signup from "./Signup";
+import MyAccount from "./MyAccount";
+import Blog from "./Blog";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="/shophub/login" element={<Login />}></Route>
             <Route path="/shophub/signup" element={<Signup />}></Route>
             <Route path="/shophub/cart" element={<Cart />}></Route>
+            <Route path="/shophub/myaccount/" element={<MyAccount />}></Route>
+            <Route path="/shophub/blog/" element={<Blog />}></Route>
           </Routes>
         </Router>
       </div>
