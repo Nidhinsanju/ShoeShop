@@ -24,22 +24,22 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username, password });
   if (user) {
-    const token = jwt.sign({ username, role: "user" }, SECRET, {
+    const token = jwt.sign({ username, CustomerId, role: "user" }, SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Logged in successfully", token, CustomerId });
+    res.json({ message: "Logged in successfully", token });
   } else {
     res.status(403).json({ message: "Invalid username or password" });
   }
 });
 
 router.get("/products", async (req, res) => {
-  const products = await Product.find({ published: true });
+  const products = await Product.find({});
   res.json({ products });
 });
 
-router.get("/mycart", async (req, res) => {
-  const products = await Product.find({ CustomerId });
+router.get("/mycart", authenticateJwt, async (req, res) => {
+  const products = await Product.find({});
   res.json({ products });
 });
 

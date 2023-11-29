@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const usersSchema = new mongoose.Schema({
   username: { type: String },
   password: String,
-  userId: Number,
+  CustomerId: Number,
   Products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
 });
 
@@ -16,11 +16,11 @@ const adminSchema = new mongoose.Schema({
 
 const ProductsSchema = new mongoose.Schema({
   ProductID: Number,
-  title: String,
-  description: String,
-  price: Number,
+  Title: String,
+  Description: String,
+  Price: Number,
   imageLink: String,
-  onAir: Boolean,
+  Onair: String,
 });
 
 const CartSchema = new mongoose.Schema({

@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "./Constents/api";
 
 function Login() {
   const [username, setusername] = useState("");
@@ -50,7 +51,7 @@ function Login() {
           <Button
             variant="outlined"
             onClick={async () => {
-              const response = await axios.post("http://", {
+              const response = await axios.post(BACKEND_URL + "/user", {
                 username: username,
                 password: password,
               });

@@ -44,31 +44,51 @@ router.post("/login", async (req, res) => {
       expiresIn: "2h",
     });
     res.json({ message: "Logged in successfully", token });
-    alert("Logged in successfully");
   } else {
     res.status(403).json({ message: "Invalid username or password" });
   }
 });
 
 router.post("/AddProduct", authenticateJwt, async (req, res) => {
-  const newProduct = new Product(req.body);
-  await newProduct.save();
-  res.json({
-    message: "Product created successfully",
-    productId: newProduct.id,
-  });
+  const { ProductID, Title, Description, Price, imageLink, Onair } = req.body;
+  try {
+    const existingProduct = await Product.findOne({ ProductID });
+    if (existingProduct) {
+      res.status(403).json({ message: "Product already exists" });
+    } else {
+      const obj = {
+        ProductID: ProductID,
+        Title: Title,
+        Description: Description,
+        Price: Price,
+        imageLink: imageLink,
+        Onair: Onair,
+      };
+
+      const newProduct = new Product(obj);
+      await newProduct.save();
+
+      res.json({ message: "Product added successfully" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
-router.put("/products/:productId", authenticateJwt, async (req, res) => {
+router.put("/product/:productId", authenticateJwt, async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(
-      req.params.productId,
-      req.body,
-      {
-        new: true,
-      }
-    );
+    const product = await Product.findOne({ ProductID: req.params.productId });
     if (product) {
+      product.Title = req.body.Title;
+      product.Description = req.body.Description;
+      product.Price = req.body.Price;
+      product.imageLink = req.body.imageLink;
+      product.Onair = req.body.Onair;
+
+      const updatedProduct = new Product(product);
+      await updatedProduct.save();
+
       res.json({ message: "Product updated successfully" });
     } else {
       res.status(404).json({ message: "Product not found" });
@@ -80,17 +100,34 @@ router.put("/products/:productId", authenticateJwt, async (req, res) => {
 });
 
 router.get("/products", authenticateJwt, async (req, res) => {
-  const products = await Product.find({});
-  res.json({ products });
+  try {
+    const products = await Product.find({});
+    res.json({ products });
+  } catch (error) {
+    res.status(403).json({ message: "error", error });
+  }
 });
 
 router.get("/product/:productId", authenticateJwt, async (req, res) => {
-  const productId = req.params.productId;
-  if (!productId) {
-    res.status(404).json({ message: "no product found" });
-  } else {
-    const product = await product.find({});
-    res.json({ product });
+  try {
+    const productId = await Product.findOne({
+      ProductID: req.params.productId,
+    });
+    if (!productId) {
+      res.status(404).json({ message: "no product found" });
+    } else {
+      res.json({
+        ProductID: productId.ProductID,
+        Title: productId.Title,
+        Description: productId.Description,
+        Price: productId.Price,
+        imageLink: productId.imageLink,
+        Onair: productId.Onair,
+      });
+    }
+  } catch (error) {
+    console.error("Error Showing Product:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

@@ -46,7 +46,7 @@ function Signup() {
           <Button
             variant="outlined"
             onClick={async () => {
-              const response = await axios.post("http:", {
+              const response = await axios.post(BACKEND_URL + "/user", {
                 username: email,
                 password: password,
               });
