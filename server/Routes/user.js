@@ -1,5 +1,5 @@
 const express = require("express");
-const { User, Product } = require("../database");
+const { User, Product, Cart } = require("../database/index");
 const { authenticateJwt, SECRET } = require("../middleware/auth");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username, password });
   if (user) {
-    const token = jwt.sign({ username, CustomerId, role: "user" }, SECRET, {
+    const token = jwt.sign({ username, role: "user" }, SECRET, {
       expiresIn: "1h",
     });
     res.json({ message: "Logged in successfully", token });
@@ -39,7 +39,8 @@ router.get("/products", async (req, res) => {
 });
 
 router.get("/mycart", authenticateJwt, async (req, res) => {
-  const products = await Product.find({});
+  const CustomerId = req.headers.CustomerId;
+  const products = await Cart.find({ CustomerId });
   res.json({ products });
 });
 
@@ -48,29 +49,41 @@ router.get("/me", async (req, res) => {
   res.json({ object });
 });
 
-router.post("/products/addproduct", authenticateJwt, async (req, res) => {
-  const product = await Product.findById(req.params.productId);
-
-  if (product) {
-    const user = await User.findOne({ username: req.user.username });
+router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
     if (user) {
-      user.purchasedProduct.push(product);
-      await user.save();
-      res.json({ message: "Product added to Cart" });
+      const cart = await Cart.findOne({ username: req.body.username });
+      await cart.save();
+
+      if (!cart) {
+        const newCart = new User({ username, password, CustomerId });
+        await newCart.save();
+      }
+      const product = await Product.findOne({
+        ProductID: req.params.productId,
+      });
+      if (product) {
+        cart.push(product);
+        await user.save();
+        res.json({ message: "Product added to Cart" });
+      } else {
+        res.status(403).json({ message: "Product not found" });
+      }
     } else {
-      res.status(403).json({ message: "User not found" });
+      res.status(404).json({ message: "User not found" });
     }
-  } else {
-    res.status(404).json({ message: "Product not found" });
+  } catch (error) {
+    res.status(403).json({ message: "Internal server error", error });
   }
 });
 
-router.get("/Myorders", authenticateJwt, async (req, res) => {
-  const user = await User.findOne({ username: req.user.username }).populate(
-    "purchasedProdcuts"
+router.get("/myorders", authenticateJwt, async (req, res) => {
+  const user = await User.findOne({ username: req.body.username }).populate(
+    "Products"
   );
   if (user) {
-    res.json({ purchasedProducts: user.purchasedProducts || [] });
+    res.json({ Products: user.Products || [] });
   } else {
     res.status(403).json({ message: "User not found" });
   }

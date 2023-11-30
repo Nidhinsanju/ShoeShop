@@ -51,13 +51,23 @@ function Login() {
           <Button
             variant="outlined"
             onClick={async () => {
-              const response = await axios.post(BACKEND_URL + "/user", {
-                username: username,
-                password: password,
-              });
-              const data = response.data;
-              localStorage.setItem("token", data.token);
-              window.location = "/";
+              try {
+                const response = await axios.post(BACKEND_URL + "/user/login", {
+                  username: username,
+                  password: password,
+                });
+                const data = response.data;
+                localStorage.setItem("token", data.token);
+                window.location = "/";
+                alert("Logged in Successfully");
+              } catch (error) {
+                if (error.request) {
+                  // The request was made but no response was received
+                  console.log(error.request, "hi1");
+                  alert("error");
+                  console.log(error, "hi2");
+                }
+              }
             }}
           >
             Log In

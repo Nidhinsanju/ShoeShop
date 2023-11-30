@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 
 // Define mongoose schemas
-const usersSchema = new mongoose.Schema({
-  username: { type: String },
-  password: String,
-  CustomerId: Number,
-  Products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-});
 
 const adminSchema = new mongoose.Schema({
   username: String,
@@ -24,11 +18,21 @@ const ProductsSchema = new mongoose.Schema({
 });
 
 const CartSchema = new mongoose.Schema({
-  title: String,
-  description: String,
+  CustomerId: Number,
   ProductID: Number,
+  Title: String,
+  Description: String,
+  Price: Number,
+  imageLink: String,
 });
 
+const usersSchema = new mongoose.Schema({
+  username: { type: String },
+  password: String,
+  CustomerId: Number,
+  Cart: CartSchema,
+  Product: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+});
 // Define mongoose models
 const User = mongoose.model("User", usersSchema);
 const Admin = mongoose.model("Admin", adminSchema);

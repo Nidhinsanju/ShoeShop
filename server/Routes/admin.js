@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/AddProduct", authenticateJwt, async (req, res) => {
+router.post("/addproduct", authenticateJwt, async (req, res) => {
   const { ProductID, Title, Description, Price, imageLink, Onair } = req.body;
   try {
     const existingProduct = await Product.findOne({ ProductID });

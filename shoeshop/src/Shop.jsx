@@ -2,9 +2,11 @@ import Card from "@mui/material/Card";
 import shoe1 from "./image/shoe-1.svg";
 import expand from "./image/expand.svg";
 import shopbag from "./image/shopping-bag.svg";
+import useFetchProduct from "./Hooks/usefetchproduct";
 
 function Shop() {
-  const Products = "";
+  const [product, setProducts] = useFetchProduct();
+  console.log(product);
   return (
     <div>
       <div>
@@ -27,7 +29,7 @@ function Shop() {
               />
             </div>
             <div>
-              {/* {Products.map((data) => {
+              {product.map((data) => {
                 return (
                   <div>
                     <Card style={{ padding: "30px " }}>
@@ -35,7 +37,7 @@ function Shop() {
                     </Card>
                   </div>
                 );
-              })} */}
+              })}
             </div>
             <button style={{ padding: "10px" }} type="disabled">
               Add to cart
@@ -43,38 +45,12 @@ function Shop() {
           </main>
         </Card>
       </div>
-      <RelatedProducts />
+      <RelatedProducts product={product} />
     </div>
   );
 
-  function RelatedProducts() {
-    const products = [
-      {
-        ProductID: 1,
-        title: "Full stack developer",
-        descrption: "learn fully",
-      },
-      {
-        ProductID: 2,
-        title: "enjoy life",
-        descrption: "do whatever u want",
-      },
-      {
-        ProductID: 3,
-        title: "enjoy life",
-        descrption: "do whatever u want",
-      },
-      {
-        ProductID: 4,
-        title: "enjoy life",
-        descrption: "do whatever u want",
-      },
-      {
-        ProductID: 5,
-        title: "enjoy life",
-        descrption: "do whatever u want",
-      },
-    ];
+  function RelatedProducts(props) {
+    const products = props.product;
     return (
       <div>
         <div>

@@ -5,7 +5,7 @@ function Cart() {
   return (
     <div>
       <main>
-        <h1>{title}</h1>
+        <h1>HELLO</h1>
         <div>
           <h3>total:{totalValue}</h3>
           <h3>Shipping:{ShippingValue}</h3>
