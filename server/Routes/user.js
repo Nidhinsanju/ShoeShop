@@ -37,16 +37,15 @@ router.get("/products", async (req, res) => {
   const products = await Product.find({});
   res.json({ products });
 });
+router.get("/me", authenticateJwt, async (req, res) => {
+  const userInfo = await User.find({});
+  res.json({ userInfo });
+});
 
 router.get("/mycart", authenticateJwt, async (req, res) => {
   const CustomerId = req.headers.CustomerId;
   const products = await Cart.find({ CustomerId });
   res.json({ products });
-});
-
-router.get("/me", async (req, res) => {
-  const object = "hello";
-  res.json({ object });
 });
 
 router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {

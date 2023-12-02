@@ -1,12 +1,10 @@
 import Card from "@mui/material/Card";
-import shoe1 from "./image/shoe-1.svg";
-import expand from "./image/expand.svg";
-import shopbag from "./image/shopping-bag.svg";
 import useFetchProduct from "./Hooks/usefetchproduct";
+import { useNavigate } from "react-router-dom";
 
 function Shop() {
   const [product, setProducts] = useFetchProduct();
-  console.log(product);
+  const navigate = useNavigate();
   return (
     <div>
       <div>
@@ -17,7 +15,7 @@ function Shop() {
               <h3>Model name</h3>
               <img
                 className="MainProduct"
-                src={shoe1}
+                src={product.imageLink}
                 alt="product Image"
                 style={{
                   maxHeight: "10%",
@@ -33,15 +31,25 @@ function Shop() {
                 return (
                   <div>
                     <Card style={{ padding: "30px " }}>
-                      <img src={data.imagelink} alt="image" />
+                      <img
+                        style={{ maxWidth: "8%", maxHeight: "10%" }}
+                        src={data.imageLink}
+                        alt="image"
+                      />
+                      <button
+                        style={{ padding: "10px" }}
+                        type="disabled"
+                        onClick={() => {
+                          navigate("/shophub/cart/" + data.ProductID);
+                        }}
+                      >
+                        Add to cart
+                      </button>
                     </Card>
                   </div>
                 );
               })}
             </div>
-            <button style={{ padding: "10px" }} type="disabled">
-              Add to cart
-            </button>
           </main>
         </Card>
       </div>
@@ -64,8 +72,14 @@ function Shop() {
                       maxWidth: "60px",
                       borderRadius: "20px",
                     }}
+                    onClick={() => {
+                      navigate("/shophub/cart/" + data.ProductID);
+                    }}
                   >
-                    <img src={expand} style={{ maxHeight: "20px" }} />
+                    <img
+                      src="https://www.svgrepo.com/show/521840/shopping-bag.svg"
+                      style={{ maxHeight: "20px" }}
+                    />
                   </button>
                   <button
                     style={{
@@ -73,11 +87,24 @@ function Shop() {
                       maxWidth: "60px",
                       borderRadius: "20px",
                     }}
+                    onClick={() => {
+                      navigate("/shophub/shop/" + data.ProductID);
+                    }}
                   >
-                    <img src={shopbag} style={{ maxHeight: "20px" }} />
+                    <img
+                      src="https://www.svgrepo.com/show/470814/expand.svg"
+                      style={{ maxHeight: "20px" }}
+                    />
                   </button>
+                  <img
+                    style={{ maxWidth: "8%", maxHeight: "10%" }}
+                    src={data.imageLink}
+                    alt="image
+                  "
+                  />
                   <li>{data.ProductID}</li>
-                  <li>{data.title}</li>
+                  <li>{data.Description}</li>
+                  <li>{data.Title}</li>
                 </Card>
               );
             })}

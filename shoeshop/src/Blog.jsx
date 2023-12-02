@@ -1,53 +1,16 @@
 import Card from "@mui/material/Card";
-import shopbag from "./image/shopping-bag.svg";
-import expand from "./image/expand.svg";
 import { useNavigate } from "react-router-dom";
+import useFetchProduct from "./Hooks/usefetchproduct";
 
 function Blog() {
   const navigate = useNavigate();
-  //   fetch("", {
-  //     headers: "Get",
-  //   })
-  //     .then((res) => {
-  //       JSON.stringify(res);
-  //     })
-  //     .then((data) => {
-  //       const newProducts = data;
-  //       console.log(newProducts);
-  //     });
-
-  const data = [
-    {
-      ProductID: 1,
-      title: "Full stack developer",
-      descrption: "learn fully",
-    },
-    {
-      ProductID: 2,
-      title: "enjoy life",
-      descrption: "do whatever u want",
-    },
-    {
-      ProductID: 3,
-      title: "enjoy life",
-      descrption: "do whatever u want",
-    },
-    {
-      ProductID: 4,
-      title: "enjoy life",
-      descrption: "do whatever u want",
-    },
-    {
-      ProductID: 5,
-      title: "enjoy life",
-      descrption: "do whatever u want",
-    },
-  ];
+  const [product, setProducts] = useFetchProduct();
+  console.log(product);
 
   return (
     <div>
       <main>
-        {data.map((data) => {
+        {product.map((data) => {
           return (
             <ul style={{ display: "flex" }}>
               <Card>
@@ -58,14 +21,12 @@ function Blog() {
                     borderRadius: "20px",
                   }}
                   onClick={() => {
-                    const id = data.ProductID;
-                    console.log("size", id);
-                    navigate("/shophub/shop/" + id);
+                    navigate("/shophub/shop/" + data.ProductID);
                   }}
                 >
                   <img
                     style={{ maxHeight: "20px" }}
-                    src={expand}
+                    src="https://www.svgrepo.com/show/470814/expand.svg"
                     alt="shoping bag"
                   />
                 </button>
@@ -77,20 +38,28 @@ function Blog() {
                     marginLeft: "20px",
                   }}
                   onClick={() => {
-                    const id = data.ProductID;
-                    console.log("cart", id);
                     navigate("/shophub/cart/");
                   }}
                 >
                   <img
                     style={{ maxHeight: "20px" }}
-                    src={shopbag}
+                    src="https://www.svgrepo.com/show/521840/shopping-bag.svg"
                     alt="shoping bag"
                   />
                 </button>
-                <li>{data.title}</li>
-                <li>{data.ProductID}</li>
-                <li>{data.descrption}</li>
+                <div
+                  style={{
+                    maxWidth: "30%",
+                    minWidth: "20%",
+                    minHeight: "20%",
+                    maxHeight: "20%",
+                  }}
+                >
+                  <h3>{data.Title}</h3>
+                  <li>{data.ProductID}</li>
+                  <h4>{data.Description}</h4>
+                  <img src={data.imageLink} alt="image" />
+                </div>
               </Card>
             </ul>
           );

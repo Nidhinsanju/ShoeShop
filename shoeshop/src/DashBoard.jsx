@@ -15,7 +15,7 @@ function Dashboard() {
         res.json().then((data) => {
           // if (data.products === string) {
           setProducts(data.products);
-          console.log(data);
+          console.log(data.products);
           // }
         });
       });

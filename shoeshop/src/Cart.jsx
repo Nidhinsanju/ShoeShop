@@ -1,15 +1,16 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 function Cart() {
-  const title = "Shopping Cart New";
-  const totalValue = 0;
-  const ShippingValue = "free Shipping ";
+  const [cart, setCart] = useState();
+  const CustomerID = useParams();
+  console.log(CustomerID);
+u
   return (
     <div>
       <main>
         <h1>HELLO</h1>
-        <div>
-          <h3>total:{totalValue}</h3>
-          <h3>Shipping:{ShippingValue}</h3>
-        </div>
+        <div>{""}</div>
       </main>
     </div>
   );

@@ -51,6 +51,7 @@ function Signup() {
                 password: password,
               });
               const data = response.data;
+              alert("Signed in Successfully");
               localStorage.setItem("token", data.token);
               window.location = "/";
             }}

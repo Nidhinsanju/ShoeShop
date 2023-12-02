@@ -2,39 +2,41 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "./Constents/api";
+import { useNavigate } from "react-router-dom";
 
 function MyAccount() {
-  const customerID = 1234;
-
-  fetch("", {
-    method: "Get",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: {
-      customerID: customerID,
-    },
-  })
-    .then((res) => {
-      JSON.stringify(res);
-    })
-    .then((data) => {
-      const userData = data;
-      console.log(userData);
-    });
+  const navigate = useNavigate();
+  const [userData, setuserData] = useState([{}]);
+  useEffect(() => {
+    try {
+      fetch(BACKEND_URL + "/user/me", {
+        method: "Post",
+      }).then((res) => {
+        res.json().then((data) => {
+          setuserData(data.userInfo);
+        });
+      });
+    } catch (error) {
+      console.log("Internal server error");
+      console.log(error);
+    }
+  }, []);
 
   return (
     <div>
-      <UpdateAccount />
+      <UpdateAccount userData={userData[0]} />
     </div>
   );
-  function UpdateAccount() {
+  function UpdateAccount(props) {
     const [currentpassword, setcurrentpassword] = useState("");
     const [changedPassword, setChangedPassword] = useState("");
     const [conform, setConform] = useState("");
-    const email = "current email";
+
+    const userdata = props.userData;
+    console.log(userdata);
     return (
       <div>
         <div>
@@ -48,7 +50,7 @@ function MyAccount() {
                   disabled
                   id="outlined-disabled"
                   label="Email"
-                  defaultValue={email}
+                  defaultValue={userdata.username}
                 />
                 <br />
                 <br />
@@ -67,7 +69,6 @@ function MyAccount() {
                 <TextField
                   onChange={(e) => {
                     setChangedPassword(e.target.value);
-                    console.log(changedPassword);
                   }}
                   id="outlined-basic2"
                   label="New Password"
@@ -80,7 +81,6 @@ function MyAccount() {
                 <TextField
                   onChange={(e) => {
                     setConform(e.target.value);
-                    console.log(conform);
                   }}
                   id="outlined-basic3"
                   label="Conform Password"
@@ -94,7 +94,7 @@ function MyAccount() {
                   variant="outlined"
                   onClick={async () => {
                     if (changedPassword === conform) {
-                      const response = await axios.post("http://", {
+                      const response = await axios.post(BACKEND_URL + "", {
                         customerID: customerID,
                         currentPassword: currentpassword,
                         updatePassword: conform,
@@ -112,31 +112,16 @@ function MyAccount() {
               </Card>
             </div>
           </main>
+          <Button
+            variant="outlined"
+            style={{ color: "green", backgroundColor: "yellow" }}
+            onClick={() => {
+              navigate("/shophub/order");
+            }}
+          >
+            Orders
+          </Button>
         </div>
-        <Oderlist />
-      </div>
-    );
-  }
-  function Oderlist() {
-    fetch("", {
-      headers: "Get",
-      body: {
-        customerID: "",
-      },
-    })
-      .then((res) => {
-        JSON.stringify(res);
-      })
-      .then((data) => {
-        const result = data;
-        console.log(result);
-      });
-
-    return (
-      <div>
-        <main style={{ display: "flex" }}>
-          <content>HELO</content>
-        </main>
       </div>
     );
   }

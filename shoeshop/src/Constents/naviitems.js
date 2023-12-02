@@ -13,7 +13,7 @@ export const pages = [
   },
   {
     title: "Contact",
-    link: "",
+    link: "/shophub/contact",
   },
   {
     title: "My Account",

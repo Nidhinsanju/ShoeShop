@@ -1,6 +1,5 @@
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import dots from "./image/download.png";
 import { pages } from "./Constents/naviitems";
 
 function Appbar() {
@@ -24,14 +23,19 @@ function Appbar() {
         }}
       >
         <div style={{ paddingLeft: "10px" }}>
-          <button style={{ borderRadius: "50%", marginRight: "10px" }}>
+          <button
+            style={{ borderRadius: "50%", marginRight: "10px" }}
+            onClick={() => {
+              navigate("/shophub/");
+            }}
+          >
             <img
               style={{
                 maxWidth: "20px",
                 maxHeight: "20px",
                 borderRadius: "50%",
               }}
-              src={dots}
+              src="https://www.svgrepo.com/show/524957/shop.svg"
               alt="image"
             />
           </button>
