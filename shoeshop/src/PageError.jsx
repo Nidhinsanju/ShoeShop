@@ -1,4 +1,4 @@
-function Contact() {
+function PageError() {
   return (
     <div>
       <h1
@@ -25,4 +25,4 @@ function Contact() {
     </div>
   );
 }
-export default Contact;
+export default PageError;

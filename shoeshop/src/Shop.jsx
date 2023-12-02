@@ -73,7 +73,7 @@ function Shop() {
                       borderRadius: "20px",
                     }}
                     onClick={() => {
-                      navigate("/shophub/cart/" + data.ProductID);
+                      navigate("/shophub/cart/");
                     }}
                   >
                     <img
@@ -81,6 +81,12 @@ function Shop() {
                       style={{ maxHeight: "20px" }}
                     />
                   </button>
+                  <img
+                    style={{ maxWidth: "8%", maxHeight: "10%" }}
+                    src={data.imageLink}
+                    alt="image
+                  "
+                  />
                   <button
                     style={{
                       maxHeight: "50px",
@@ -96,12 +102,6 @@ function Shop() {
                       style={{ maxHeight: "20px" }}
                     />
                   </button>
-                  <img
-                    style={{ maxWidth: "8%", maxHeight: "10%" }}
-                    src={data.imageLink}
-                    alt="image
-                  "
-                  />
                   <li>{data.ProductID}</li>
                   <li>{data.Description}</li>
                   <li>{data.Title}</li>

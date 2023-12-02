@@ -15,7 +15,6 @@ function Dashboard() {
         res.json().then((data) => {
           // if (data.products === string) {
           setProducts(data.products);
-          console.log(data.products);
           // }
         });
       });
@@ -49,7 +48,15 @@ function Dashboard() {
             <h2>{product.Title}</h2>
             <h5>{product.Description}</h5>
             <h4>{product.Price}</h4>
-            <img src={product.imageLink}></img>
+            <img
+              style={{
+                maxHeight: "50%",
+                maxWidth: "30%",
+                minWidth: "30%",
+                minHeight: "40% ",
+              }}
+              src={product.imageLink}
+            ></img>
             <button
               onClick={() => {
                 navigate("/shophub/cart/" + product.ProductID);

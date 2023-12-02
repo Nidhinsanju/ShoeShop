@@ -5,8 +5,11 @@ export default function useFetchProduct() {
   const [product, setProducts] = useState([]);
   useEffect(() => {
     try {
-      fetch(BACKEND_URL + "/user/products", {
-        method: "Get",
+      fetch(BACKEND_URL + "/user/me", {
+        method: "post",
+        body: {
+          coustomerID: coustomerID,
+        },
       }).then((res) => {
         res.json().then((data) => {
           // if (data.products === string) {

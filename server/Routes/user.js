@@ -42,9 +42,9 @@ router.get("/me", authenticateJwt, async (req, res) => {
   res.json({ userInfo });
 });
 
-router.get("/mycart", authenticateJwt, async (req, res) => {
-  const CustomerId = req.headers.CustomerId;
-  const products = await Cart.find({ CustomerId });
+router.get("/mycart", async (req, res) => {
+  // const CustomerId = req..CustomerId;
+  const products = await Cart.find({});
   res.json({ products });
 });
 

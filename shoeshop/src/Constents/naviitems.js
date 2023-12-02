@@ -1,9 +1,5 @@
 export const pages = [
   {
-    title: "Home",
-    link: "/shophub/",
-  },
-  {
     title: "Shop",
     link: "/shophub/shop",
   },
@@ -13,7 +9,7 @@ export const pages = [
   },
   {
     title: "Contact",
-    link: "/shophub/contact",
+    link: "/shophub/error",
   },
   {
     title: "My Account",

@@ -112,15 +112,6 @@ function MyAccount() {
               </Card>
             </div>
           </main>
-          <Button
-            variant="outlined"
-            style={{ color: "green", backgroundColor: "yellow" }}
-            onClick={() => {
-              navigate("/shophub/order");
-            }}
-          >
-            Orders
-          </Button>
         </div>
       </div>
     );

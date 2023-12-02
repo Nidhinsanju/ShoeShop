@@ -5,7 +5,6 @@ import useFetchProduct from "./Hooks/usefetchproduct";
 function Blog() {
   const navigate = useNavigate();
   const [product, setProducts] = useFetchProduct();
-  console.log(product);
 
   return (
     <div>
