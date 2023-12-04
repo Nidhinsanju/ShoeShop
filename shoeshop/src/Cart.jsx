@@ -1,20 +1,45 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
-import { Navigate } from "react-router-dom";
+import { BACKEND_URL } from "./Constents/api";
+import Shop from "./Shop";
+
 function Cart() {
+  const ID = Shop.ID;
+  const [product, setProduct] = useState();
   const navigate = useNavigate("");
-  const params = useParams("");
-  const [cart, setCart] = useState("");
+  useEffect(() => {
+    try {
+      fetch(
+        BACKEND_URL + "/user/addproudct",
+        {
+          method: "Post",
+        },
+        {
+          // ProductID: ID,
+        }
+      ).then((res) => {
+        res.json().then((data) => {
+          // if (data.products === string) {
+          setProduct(data.product);
+          console.log(data);
+          // }
+        });
+      });
+    } catch (error) {
+      alert("Failed to fetch");
+      console.log(error);
+    }
+  }, []);
 
   return (
     <div>
       <main>
-        <h1>HELLO</h1>
+        <h1>HELLO{ID}</h1>
         <div></div>
       </main>
-      <ListCart />
+      <ListCart product={product} />
     </div>
   );
 

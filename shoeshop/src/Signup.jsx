@@ -3,8 +3,12 @@ import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import { useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "./Constents/api";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate;
   const [email, setmail] = useState("");
   const [password, setpassword] = useState("");
   return (
@@ -46,14 +50,34 @@ function Signup() {
           <Button
             variant="outlined"
             onClick={async () => {
-              const response = await axios.post(BACKEND_URL + "/user", {
-                username: email,
-                password: password,
-              });
-              const data = response.data;
-              alert("Signed in Successfully");
-              localStorage.setItem("token", data.token);
-              window.location = "/";
+              try {
+                if (!email || !password) {
+                  alert("No Username or Password Found ");
+                } else {
+                  const response = await axios.post(
+                    BACKEND_URL + "/user/signup",
+                    {
+                      username: email,
+                      password: password,
+                    }
+                  );
+                  if (response.status === 200) {
+                    alert("Signed in Successfully");
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("CustomerID", data.CustomerId);
+                    window.location = "/";
+                    navigate("/shophub/");
+                  }
+                  if (response.status === 403) {
+                    alert("User already existss");
+                  }
+                }
+              } catch (error) {
+                if (error.response.status) {
+                  console.log(error.response.status);
+                  alert("User already exists");
+                }
+              }
             }}
           >
             SignUp

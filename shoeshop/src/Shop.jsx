@@ -1,9 +1,12 @@
 import Card from "@mui/material/Card";
 import useFetchProduct from "./Hooks/usefetchproduct";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Shop() {
   const [product, setProducts] = useFetchProduct();
+  const [ID, setID] = useState("");
+
   const navigate = useNavigate();
   return (
     <div>
@@ -40,7 +43,8 @@ function Shop() {
                         style={{ padding: "10px" }}
                         type="disabled"
                         onClick={() => {
-                          navigate("/shophub/cart/" + data.ProductID);
+                          setID(data.ProductID);
+                          navigate("/shophub/cart/");
                         }}
                       >
                         Add to cart
@@ -84,8 +88,7 @@ function Shop() {
                   <img
                     style={{ maxWidth: "8%", maxHeight: "10%" }}
                     src={data.imageLink}
-                    alt="image
-                  "
+                    alt="image"
                   />
                   <button
                     style={{
