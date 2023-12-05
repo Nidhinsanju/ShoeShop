@@ -1,4 +1,6 @@
-
+* {
+  margin: 0%;
+}
 
 /* @keyframes logo-spin {
   from {
@@ -14,4 +16,3 @@
     animation: logo-spin infinite 15s linear;
   }
 } */
-

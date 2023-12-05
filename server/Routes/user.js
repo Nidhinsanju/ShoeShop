@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ username, role: "user" }, SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Logged in successfully", token });
+    res.json({ message: "Logged in successfully", token, user });
   } else {
     res.status(403).json({ message: "Invalid username or password" });
   }
@@ -58,25 +58,21 @@ router.post("/addproudct", async (req, res) => {
     // await newCart.save();
     // res.json({ message: "Product added successfully", Cart });
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
     // Check if the product is already in the user's cart
-    const existingProductIndex = user.Cart.products.findIndex(
+    const existingProductIndex = User.Cart.products.findIndex(
       (product) => product.ProductID === productId
     );
 
     if (existingProductIndex !== -1) {
       // If the product is already in the cart, update the quantity
-      user.Cart.products[existingProductIndex].quantity += quantity;
+      User.Cart.products[existingProductIndex].quantity += quantity;
     } else {
       // If the product is not in the cart, add it
-      user.Cart.products.push({ productId, quantity });
+      User.Cart.products.push({ productId, quantity });
     }
 
     // Save the updated user to the database
-    await user.save();
+    await User.save();
     res.json({ message: "Product added successfully", Cart });
     // Return the user's cart
   } catch (error) {
@@ -100,8 +96,8 @@ router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
         ProductID: req.params.productId,
       });
       if (product) {
-        cart.push(product);
-        await user.save();
+        Cart.push(product);
+        await User.save();
         res.json({ message: "Product added to Cart" });
       } else {
         res.status(403).json({ message: "Product not found" });

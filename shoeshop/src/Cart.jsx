@@ -9,34 +9,33 @@ function Cart() {
   const ID = Shop.ID;
   const [product, setProduct] = useState();
   const navigate = useNavigate("");
-  useEffect(() => {
-    try {
-      fetch(
-        BACKEND_URL + "/user/addproudct",
-        {
-          method: "Post",
-        },
-        {
-          // ProductID: ID,
-        }
-      ).then((res) => {
-        res.json().then((data) => {
-          // if (data.products === string) {
-          setProduct(data.product);
-          console.log(data);
-          // }
-        });
-      });
-    } catch (error) {
-      alert("Failed to fetch");
-      console.log(error);
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     fetch(
+  //       BACKEND_URL + "/user/addproudct",
+  //       {
+  //         method: "Post",
+  //       },
+  //       {
+  //         // ProductID: ID,
+  //       }
+  //     ).then((res) => {
+  //       res.json().then((data) => {
+  //         // if (data.products === string) {
+  //         setProduct(data.product);
+  //         console.log(data);
+  //         // }
+  //       });
+  //     });
+  //   } catch (error) {
+  //     alert("Failed to fetch");
+  //     console.log(error);
+  //   }
+  // }, []);
 
   return (
     <div>
       <main>
-        <h1>HELLO{ID}</h1>
         <div></div>
       </main>
       <ListCart product={product} />

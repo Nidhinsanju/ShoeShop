@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "./Constents/api";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -20,14 +21,12 @@ function Dashboard() {
       });
     } catch (error) {
       alert("Failed to fetch");
-      console.log(error);
     }
   }, []);
 
   return (
     <div
       style={{
-        backgroundColor: "orange",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-evenly",
@@ -38,32 +37,37 @@ function Dashboard() {
         return (
           <div
             style={{
+              height: "auto",
+              maxheight: "250px",
+              width: "auto",
+              maxwidth: "250px",
               display: "flex",
               flexDirection: "column",
-              border: "2px black solid ",
-              padding: "10px",
-              minWidth: "20%",
+              minHeight: "250px",
+              margin: "50px",
             }}
           >
-            <h2>{product.Title}</h2>
-            <h5>{product.Description}</h5>
+            <h2 className="font-mono ... text-xl ...">{product.Title}</h2>
+            <h5 className="font-serif ... ">{product.Description}</h5>
             <h4>{product.Price}</h4>
             <img
               style={{
-                maxHeight: "50%",
-                maxWidth: "30%",
-                minWidth: "30%",
-                minHeight: "40% ",
+                width: "320px",
+                height: "415px",
+                maxheight: "250px",
+                maxwidth: "200px",
               }}
               src={product.imageLink}
             ></img>
-            <button
+            <Button
+              variant="contained"
+              size="medium"
               onClick={() => {
                 navigate("/shophub/cart/" + product.ProductID);
               }}
             >
               Add to cart
-            </button>
+            </Button>
           </div>
         );
       })}
