@@ -17,23 +17,13 @@ function Blog() {
     >
       {product.map((data) => {
         return (
-          <Card
-            style={{
-              height: "auto",
-              maxheight: "250px",
-              width: "auto",
-              maxwidth: "250px",
-              display: "flex",
-              flexDirection: "column",
-              minHeight: "250px",
-              margin: "50px",
-            }}
-          >
+          <Card style={{ margin: "70px" }}>
             <button
-               style={{
+              style={{
                 maxHeight: "50px",
                 maxWidth: "60px",
                 borderRadius: "20px",
+                marginLeft: "8px",
               }}
               onClick={() => {
                 navigate("/shophub/shop/");
@@ -50,7 +40,7 @@ function Blog() {
                 maxHeight: "50px",
                 maxWidth: "60px",
                 borderRadius: "20px",
-                marginLeft: "20px",
+                marginLeft: "165px",
               }}
               onClick={() => {
                 navigate("/shophub/cart/");
@@ -62,23 +52,29 @@ function Blog() {
                 alt="shoping bag"
               />
             </button>
-            <div
-              style={{
-                maxWidth: "30%",
-                minWidth: "20%",
-                minHeight: "20%",
-                maxHeight: "20%",
-              }}
-            >
-              <h3>{data.Title}</h3>
-              <li>{data.ProductID}</li>
-              <h4>{data.Description}</h4>
+            <div>
+              <h3
+                style={{
+                  fontFamily: "cursive",
+                }}
+              >
+                {data.Title}
+              </h3>
+              <h4
+                style={{
+                  fontFamily: "initial",
+                  display: "flex",
+                  flex: "wrap",
+                }}
+              >
+                {data.Description}
+              </h4>
               <img
                 style={{
-                  width: "520px",
-                  height: "325px",
-                  maxheight: "350px",
-                  maxwidth: "400px",
+                  width: "220px",
+                  height: "225px",
+                  maxheight: "250px",
+                  maxwidth: "300px",
                 }}
                 src={data.imageLink}
                 alt="image"

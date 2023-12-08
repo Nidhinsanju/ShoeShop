@@ -35,89 +35,83 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// router.post("/product/:Id", async (req, res) => {
+//   const products = await Product.find({ ProductID: req.params.Id });
+//   res.json({ products });
+// });
+
 router.get("/products", async (req, res) => {
   const products = await Product.find({});
   res.json({ products });
 });
 router.get("/me", authenticateJwt, async (req, res) => {
-  const userInfo = await User.find({});
+  const CustomerId = req.body.CustomerId;
+  const userInfo = await User.find({ CustomerId });
   res.json({ userInfo });
 });
 
-router.get("/mycart", async (req, res) => {
-  // const CustomerId = req..CustomerId;
-  const products = await Cart.find({});
-  res.json({ products });
-});
-
-router.post("/addproudct", async (req, res) => {
-  const { productId, quantity } = req.body;
+router.get("/mycart", authenticateJwt, async (req, res) => {
   try {
-    // const product = await Product.findOne({ ProductID: req.body.ProductID });
-    // const newCart = new Cart({ product });
-    // await newCart.save();
-    // res.json({ message: "Product added successfully", Cart });
-
-    // Check if the product is already in the user's cart
-    const existingProductIndex = User.Cart.products.findIndex(
-      (product) => product.ProductID === productId
-    );
-
-    if (existingProductIndex !== -1) {
-      // If the product is already in the cart, update the quantity
-      User.Cart.products[existingProductIndex].quantity += quantity;
-    } else {
-      // If the product is not in the cart, add it
-      User.Cart.products.push({ productId, quantity });
-    }
-
-    // Save the updated user to the database
-    await User.save();
-    res.json({ message: "Product added successfully", Cart });
-    // Return the user's cart
+    const CustomerId = req.body.CustomerId;
+    const cart = await Cart.find({ CustomerId });
+    res.status(200).json({ cart });
   } catch (error) {
-    console.log("error", error);
-    res.json({ message: "Internal server error" });
+    res.status(403).json("internal server errror");
   }
 });
 
 router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
+  const CustomerId = req.body.CustomerId;
   try {
-    const user = await User.findOne({ username: req.body.username });
-    if (user) {
-      const cart = await Cart.findOne({ username: req.body.username });
+    const user = await User.findOne({ CustomerId });
+    const cart = await Cart.findOne({ CustomerId: req.body.CustomerId });
+    if (cart) {
       await cart.save();
-
-      if (!cart) {
-        const newCart = new User({ username, password, CustomerId });
-        await newCart.save();
-      }
-      const product = await Product.findOne({
-        ProductID: req.params.productId,
-      });
-      if (product) {
-        Cart.push(product);
-        await User.save();
-        res.json({ message: "Product added to Cart" });
-      } else {
-        res.status(403).json({ message: "Product not found" });
-      }
+    }
+    if (!cart) {
+      const newcart = new Cart({ CustomerId });
+      await newcart.save();
+    }
+    const product = await Product.findOne({
+      ProductID: req.params.productId,
+    });
+    if (product) {
+      cart.products.push(product);
+      await cart.save();
+      res.json({ message: "Product added to Cart" });
+      await user.save();
     } else {
-      res.status(404).json({ message: "User not found" });
+      res.status(403).json({ message: "Product not found" });
     }
   } catch (error) {
-    res.status(403).json({ message: "Internal server error", error });
+    res
+      .status(403)
+      .json({ message: "Internal server error", error: error.message });
   }
 });
 
-router.get("/myorders", authenticateJwt, async (req, res) => {
-  const user = await User.findOne({ username: req.body.username }).populate(
-    "Products"
-  );
-  if (user) {
-    res.json({ Products: user.Products || [] });
-  } else {
-    res.status(403).json({ message: "User not found" });
+router.post("/cart", authenticateJwt, async (req, res) => {
+  try {
+    const CustomerId = req.body.CustomerId;
+    const user = await User.findOne({ CustomerId });
+    if (user) {
+      const cart = await Cart.findOne({ CustomerId });
+      if (cart) {
+        res.status(403).json({ message: "cart found", cart });
+        await cart.save();
+      } else {
+        const newcart = new Cart({ CustomerId });
+        await newcart.save();
+        res.status(200).json({ message: "new cart created", CustomerId });
+      }
+    } else {
+      res.status(200).json({ message: "No user found" });
+    }
+  } catch (error) {
+    res.status(403).json({
+      message: "internal server error",
+      error: error.message,
+    });
   }
 });
 

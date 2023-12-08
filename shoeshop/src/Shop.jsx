@@ -157,6 +157,8 @@ function Shop() {
                   maxHeight: "50px",
                   maxWidth: "60px",
                   borderRadius: "20px",
+                  marginLeft: "10px",
+                  marginRight: "85px",
                 }}
                 onClick={() => {
                   navigate("/shophub/cart/");
@@ -167,21 +169,13 @@ function Shop() {
                   style={{ maxHeight: "20px" }}
                 />
               </button>
-              <img
-                style={{
-                  width: "100px",
-                  height: "120px",
-                  maxheight: "150px",
-                  maxwidth: "200px",
-                }}
-                src={data.imageLink}
-                alt="image"
-              />
               <button
                 style={{
                   maxHeight: "50px",
                   maxWidth: "60px",
                   borderRadius: "20px",
+                  marginLeft: "85px",
+                  marginRight: "10px",
                 }}
                 onClick={() => {
                   const orderID = Math.floor(Math.random() * 10000);
@@ -194,6 +188,19 @@ function Shop() {
                   style={{ maxHeight: "20px" }}
                 />
               </button>
+              <img
+                style={{
+                  width: "100px",
+                  height: "120px",
+                  maxheight: "150px",
+                  maxwidth: "200px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                src={data.imageLink}
+                alt="image"
+              />
+
               <h3
                 style={{
                   fontFamily: "cursive",
