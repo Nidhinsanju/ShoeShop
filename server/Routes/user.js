@@ -10,10 +10,11 @@ router.post("/signup", async (req, res) => {
   if (user) {
     res.status(403).json({ message: "User already exists" });
   } else {
-    const CustomerId = Math.floor(Math.random() * 10000);
+    // const CustomerId = Math.floor(Math.random() * 10000);
     const newUser = new User({ username, password, CustomerId });
+    const CustomerId = newUser._id;
     await newUser.save();
-    const token = jwt.sign({ username, role: "user" }, SECRET, {
+    const token = jwt.sign({ username, role: "user", CustomerId }, SECRET, {
       expiresIn: "1h",
     });
     res
@@ -25,11 +26,13 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username, password });
+  const CustomerID = user.CustomerId;
   if (user) {
     const token = jwt.sign({ username, role: "user" }, SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Logged in successfully", token, user });
+
+    res.json({ message: "Logged in successfully hi", token, user, CustomerID });
   } else {
     res.status(403).json({ message: "Invalid username or password" });
   }
@@ -44,13 +47,36 @@ router.get("/products", async (req, res) => {
   const products = await Product.find({});
   res.json({ products });
 });
-router.get("/me", authenticateJwt, async (req, res) => {
-  const CustomerId = req.body.CustomerId;
-  const userInfo = await User.find({ CustomerId });
-  res.json({ userInfo });
+
+router.post("/me", authenticateJwt, async (req, res) => {
+  try {
+    const CustomerId = req.body.CustomerId;
+    const user = await User.findOne({ CustomerId });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(403).json({
+      message: "internal server error1",
+      error,
+    });
+  }
 });
 
-router.get("/mycart", authenticateJwt, async (req, res) => {
+router.post("/me2", async (req, res) => {
+  try {
+    console.log(req);
+    const CustomerId = req.body.CustomerId;
+    const user = await User.findOne({ CustomerId });
+    console.log(user);
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(403).json({
+      message: "internal server error",
+      error,
+    });
+  }
+});
+
+router.post("/mycart", authenticateJwt, async (req, res) => {
   try {
     const CustomerId = req.body.CustomerId;
     const cart = await Cart.find({ CustomerId });

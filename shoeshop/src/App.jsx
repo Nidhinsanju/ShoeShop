@@ -3,6 +3,7 @@ import "./App.css";
 import Cart from "./Cart";
 import Dashboard from "./DashBoard";
 import Login from "./Login";
+import Logout from "./Logout";
 import {
   RecoilRoot,
   atom,
@@ -34,6 +35,7 @@ function App() {
               <Route path="/shophub/blog/" element={<Blog />}></Route>
               <Route path="/shophub/shop/" element={<Shop />}></Route>
               <Route path="/shophub/error" element={<PageError />}></Route>
+              <Route path="/shophub/logout" element={<Logout />}></Route>
             </Routes>
           </Router>
         </RecoilRoot>

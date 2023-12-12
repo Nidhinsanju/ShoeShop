@@ -1,28 +1,11 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { BACKEND_URL } from "./Constents/api";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import useFetchProduct from "./Hooks/usefetchproduct";
 
 function Dashboard() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    try {
-      fetch(BACKEND_URL + "/user/products", {
-        method: "Get",
-      }).then((res) => {
-        res.json().then((data) => {
-          // if (data.products === string) {
-          setProducts(data.products);
-          // }
-        });
-      });
-    } catch (error) {
-      alert("Failed to fetch");
-    }
-  }, []);
+  const [products, setProducts] = useFetchProduct();
 
   return (
     <div

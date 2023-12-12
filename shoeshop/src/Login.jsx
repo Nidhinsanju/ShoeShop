@@ -57,9 +57,11 @@ function Login() {
                   password: password,
                 });
                 const data = response.data;
+                console.log(data);
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("CustomerID", data.CustomerID);
                 window.location = "/";
-                alert("Logged in Successfully");
+                // alert("Logged in Successfully");
               } catch (error) {
                 if (error.request) {
                   // The request was made but no response was received

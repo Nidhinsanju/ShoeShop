@@ -8,17 +8,21 @@ const authenticateJwt = (req, res, next) => {
       const token = authHeader.split(" ")[1];
       jwt.verify(token, SECRET, (err, user) => {
         if (err) {
-          return res.sendStatus(403);
+          return res.status(403).json({
+            message: "token mismatch",
+          });
         }
         req.user = user;
         next();
       });
     } else {
-      res.sendStatus(401);
+      res.status(401).json({
+        message: "No token found",
+      });
     }
   } catch (error) {
     console.error("Error updating course:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error", error });
   }
 };
 

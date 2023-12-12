@@ -3,46 +3,31 @@ import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import { BACKEND_URL } from "./Constents/api";
-import Shop from "./Shop";
+import useFetchUser from "./Hooks/useFetchUser";
 
 function Cart() {
-  const ID = Shop.ID;
-  const [product, setProduct] = useState();
   const navigate = useNavigate("");
-  // useEffect(() => {
-  //   try {
-  //     fetch(
-  //       BACKEND_URL + "/user/addproudct",
-  //       {
-  //         method: "Post",
-  //       },
-  //       {
-  //         // ProductID: ID,
-  //       }
-  //     ).then((res) => {
-  //       res.json().then((data) => {
-  //         // if (data.products === string) {
-  //         setProduct(data.product);
-  //         console.log(data);
-  //         // }
-  //       });
-  //     });
-  //   } catch (error) {
-  //     alert("Failed to fetch");
-  //     console.log(error);
-  //   }
-  // }, []);
+  const [user, setUser] = useFetchUser();
+  useEffect(() => {
+    if (!user) {
+      alert("Login in first");
+      console.log("no user found");
+      navigate("/shophub/login");
+    }
+  }, [user]);
 
-  return (
-    <div>
-      <main>
-        <div></div>
-      </main>
-      <ListCart product={product} />
-    </div>
-  );
+  if (user) {
+    return (
+      <div>
+        hello user
+        {console.log(user)}
+        <ListCart />
+      </div>
+    );
+  }
 
-  function ListCart() {
+  function ListCart(props) {
+    const products1 = props.products1;
     const products = [
       {
         ProductID: 1,
@@ -63,6 +48,7 @@ function Cart() {
         Onair: true,
       },
     ];
+    console.log(products1);
     return (
       <div>
         <main>
