@@ -9,7 +9,6 @@ import { BACKEND_URL } from "./Constents/api";
 import useFetchUser from "./Hooks/useFetchUser";
 
 function MyAccount() {
-  const [userData, setuserData] = useState([{}]);
   const navigate = useNavigate("");
   const [currentpassword, setcurrentpassword] = useState("");
   const [changedPassword, setChangedPassword] = useState("");
@@ -18,9 +17,7 @@ function MyAccount() {
 
   useEffect(() => {
     if (!user) {
-      alert("Login in");
-      console.log("no user found");
-      navigate("/shophub/login");
+      console.log("wrong user");
     }
   }, [user]);
 
@@ -47,7 +44,7 @@ function MyAccount() {
               disabled
               id="outlined-disabled"
               label="Email"
-              defaultValue={userdata.username}
+              defaultValue={user.username}
             />
             <br />
             <br />

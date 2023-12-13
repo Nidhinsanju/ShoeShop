@@ -52,16 +52,22 @@ function Login() {
             variant="outlined"
             onClick={async () => {
               try {
-                const response = await axios.post(BACKEND_URL + "/user/login", {
-                  username: username,
-                  password: password,
-                });
-                const data = response.data;
-                console.log(data);
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("CustomerID", data.CustomerID);
-                window.location = "/";
-                // alert("Logged in Successfully");
+                if (!username || !password) {
+                  alert("No Username or Password Found ");
+                } else {
+                  const response = await axios.post(
+                    BACKEND_URL + "/user/login",
+                    {
+                      username: username,
+                      password: password,
+                    }
+                  );
+                  const data = response.data;
+                  localStorage.setItem("token", data.token);
+                  localStorage.setItem("CustomerID", data.CustomerID);
+                  window.location = "/shophub/";
+                }
+                //logged in successfully
               } catch (error) {
                 if (error.request) {
                   // The request was made but no response was received

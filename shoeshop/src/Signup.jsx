@@ -65,7 +65,7 @@ function Signup() {
                     alert("Signed in Successfully");
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("CustomerID", data.CustomerId);
-                    window.location = "/";
+                    window.location = "/shophub/";
                     navigate("/shophub/");
                   }
                   if (response.status === 403) {

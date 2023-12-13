@@ -61,20 +61,20 @@ router.post("/me", authenticateJwt, async (req, res) => {
   }
 });
 
-router.post("/me2", async (req, res) => {
-  try {
-    console.log(req);
-    const CustomerId = req.body.CustomerId;
-    const user = await User.findOne({ CustomerId });
-    console.log(user);
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(403).json({
-      message: "internal server error",
-      error,
-    });
-  }
-});
+// router.post("/me2", async (req, res) => {
+//   try {
+//     console.log(req);
+//     const CustomerId = req.body.CustomerId;
+//     const user = await User.findOne({ CustomerId });
+//     console.log(user);
+//     res.status(200).json({ user });
+//   } catch (error) {
+//     res.status(403).json({
+//       message: "internal server error",
+//       error,
+//     });
+//   }
+// });
 
 router.post("/mycart", authenticateJwt, async (req, res) => {
   try {
@@ -102,7 +102,8 @@ router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
       ProductID: req.params.productId,
     });
     if (product) {
-      cart.products.push(product);
+      const newProduct = new Product(product);
+      cart.products.push(newProduct);
       await cart.save();
       res.json({ message: "Product added to Cart" });
       await user.save();

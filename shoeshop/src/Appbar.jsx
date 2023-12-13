@@ -1,8 +1,12 @@
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { pages } from "./Constents/naviitems";
+import { useEffect, useState } from "react";
+import useFetchUser from "./Hooks/useFetchUser";
 
 function Appbar() {
+  const [button, setbutton] = useState();
+  const [user, setUser] = useFetchUser();
   const navigate = useNavigate();
   return (
     <div
@@ -76,7 +80,6 @@ function Appbar() {
           ))}
         </ul>
       </div>
-      {}
       <div
         style={{
           display: "flex",

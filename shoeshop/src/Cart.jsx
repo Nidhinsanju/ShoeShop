@@ -2,57 +2,54 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
-import { BACKEND_URL } from "./Constents/api";
 import useFetchUser from "./Hooks/useFetchUser";
+
+
+//1.first check the user logged in or not
+//2.if user is logged in and if he has products in the cart display it
+//3.if the user has no products in the cart show him no products
 
 function Cart() {
   const navigate = useNavigate("");
   const [user, setUser] = useFetchUser();
+  const [products, setProducts] = useState();
+  const [cartitem, setCartitem] = useState();
+
   useEffect(() => {
-    if (!user) {
-      alert("Login in first");
-      console.log("no user found");
-      navigate("/shophub/login");
-    }
+    console.log(user);
   }, [user]);
 
-  if (user) {
-    return (
-      <div>
-        hello user
-        {console.log(user)}
-        <ListCart />
-      </div>
-    );
-  }
+  return (
+    <div>
+      {cartitem?.map((data) => {
+        return (
+          <div>
+            <h3>{data.username}</h3>
+          </div>
+        );
+      })}
+      hello world
+      {<ListCart products={products} />}
+    </div>
+  );
+  //...........................................................................................................................
 
   function ListCart(props) {
-    const products1 = props.products1;
-    const products = [
+    const products = props.products1;
+    if (products?.length === 0) {
       {
-        ProductID: 1,
-        Title: "Nike shoe",
-        Description: "JUST DO IT",
-        Price: 6999,
-        imageLink:
-          "https://assets.ajio.com/medias/sys_master/root/20221110/z5Lv/636cd4acaeb269659c84b85f/-473Wx593H-469331513-white-MODEL.jpg",
-        Onair: true,
-      },
-      {
-        ProductID: 2,
-        Title: "Nike shoe2",
-        Description: "JUST DO IT",
-        Price: 6999,
-        imageLink:
-          "https://assets.ajio.com/medias/sys_master/root/20221110/z5Lv/636cd4acaeb269659c84b85f/-473Wx593H-469331513-white-MODEL.jpg",
-        Onair: true,
-      },
-    ];
-    console.log(products1);
+        console.log("length is 0");
+      }
+      return (
+        <div>
+          <main>Cart is Empty</main>
+        </div>
+      );
+    }
     return (
       <div>
         <main>
-          {products.map((data) => {
+          {products?.map((data) => {
             return (
               <div>
                 <Card style={{ margin: "20px" }}>

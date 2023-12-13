@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../Constents/api";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function useFetchUser() {
   const navigate = useNavigate();
@@ -11,27 +12,27 @@ export default function useFetchUser() {
         const token = localStorage.getItem("token");
         const CustomerID = localStorage.getItem("CustomerID");
         const value = { CustomerId: CustomerID };
+
         if (!token) {
-          console.log(token);
-          // return navigate("/login");
+          console.log(token),"1";
         } else {
           // console.log(JSON.stringify(value));
-          fetch(BACKEND_URL + "/user/me", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: "bearer " + token,
-            },
-            body: JSON.stringify(value),
-          }).then((res) => {
-            if (res.status === 200) {
-              res.json().then((data) => {
-                setUser(data);
-              });
-            } else {
-              console.log("server error with status", res.status);
+          const res = await axios.post(
+            BACKEND_URL + "/user/me",
+            JSON.stringify(value),
+            {
+              headers: {
+                "Content-Type": "application/json",
+                authorization: "Bearer " + token,
+              },
             }
-          });
+          );
+          if (res.status === 200) {
+            const newData = res.data.user;
+            setUser(newData);
+          } else {
+            console.log("server error with status", res.status);
+          }
         }
       } catch (error) {
         console.log("error in catch", error);
