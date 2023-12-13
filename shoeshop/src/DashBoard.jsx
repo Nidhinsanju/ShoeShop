@@ -46,7 +46,7 @@ function Dashboard() {
               variant="contained"
               size="medium"
               onClick={() => {
-                navigate("/shophub/cart/" + product.ProductID);
+                navigate("/shophub/cart/");
               }}
             >
               Add to cart

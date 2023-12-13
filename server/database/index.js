@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 // Define mongoose schemas
 
 const adminSchema = new mongoose.Schema({
@@ -28,6 +27,7 @@ const UsersSchema = new mongoose.Schema({
   CustomerId: Number,
   Cart: CartSchema,
 });
+
 // Define mongoose models
 const User = mongoose.model("User", UsersSchema);
 const Admin = mongoose.model("Admin", adminSchema);

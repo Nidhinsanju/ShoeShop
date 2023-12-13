@@ -38,10 +38,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// router.post("/product/:Id", async (req, res) => {
-//   const products = await Product.find({ ProductID: req.params.Id });
-//   res.json({ products });
-// });
 
 router.get("/products", async (req, res) => {
   const products = await Product.find({});
@@ -116,6 +112,7 @@ router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 });
+
 
 router.post("/cart", authenticateJwt, async (req, res) => {
   try {

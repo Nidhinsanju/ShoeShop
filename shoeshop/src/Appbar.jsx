@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import useFetchUser from "./Hooks/useFetchUser";
 
 function Appbar() {
-  const [button, setbutton] = useState();
-  const [user, setUser] = useFetchUser();
   const navigate = useNavigate();
   return (
     <div
@@ -79,37 +77,71 @@ function Appbar() {
             </li>
           ))}
         </ul>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          backgroundColor: "grey",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ marginLeft: "10px" }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              navigate("/shophub/login");
-            }}
-          >
-            Login
-          </Button>
-        </div>
-        <div style={{ marginLeft: "10px" }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              navigate("/shophub/Signup");
-            }}
-          >
-            Signup
-          </Button>
-        </div>
+        <Check />
       </div>
     </div>
   );
+
+  function Check() {
+    const token = localStorage.getItem("token");
+    if (token != "null") {
+      return (
+        <div>
+          <Button
+            variant="contained"
+            onClick={() => {
+              localStorage.setItem("token", null);
+              localStorage.setItem("CustomerID", null);
+              navigate("/shophub/Login");
+            }}
+          >
+            Logout
+          </Button>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            display: "flex",
+            backgroundColor: "grey",
+            justifyContent: "space-between",
+            alignContent: "center",
+            height: "100%",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: "grey",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ marginLeft: "10px" }}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  navigate("/shophub/login");
+                }}
+              >
+                Login
+              </Button>
+            </div>
+            <div style={{ marginLeft: "10px" }}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  navigate("/shophub/Signup");
+                }}
+              >
+                Signup
+              </Button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
 }
 
 export default Appbar;

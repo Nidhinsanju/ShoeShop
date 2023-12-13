@@ -14,99 +14,96 @@ function MyAccount() {
   const [changedPassword, setChangedPassword] = useState("");
   const [conform, setConform] = useState("");
   const [user, setUser] = useFetchUser();
+  const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!user) {
-      console.log("wrong user");
-    }
-  }, [user]);
-
-  if (user) {
+  if (token !== "null") {
     return (
-      <div>
-        {console.log(user)}
-        <div
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "15%",
+        }}
+      >
+        <Card
+          variant="outlined"
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "15%",
+            width: "400px",
+            padding: "20px",
           }}
         >
-          <Card
+          <TextField
+            disabled
+            id="outlined-disabled"
+            label="Email"
+            defaultValue={user.username}
+          />
+          <br />
+          <br />
+          <TextField
+            onChange={(e) => {
+              setcurrentpassword(e.target.value);
+            }}
+            id="outlined-basic1"
+            label="Current Password"
+            type="password"
             variant="outlined"
-            style={{
-              width: "400px",
-              padding: "20px",
+            fullWidth={true}
+          />
+          <br />
+          <br />
+          <TextField
+            onChange={(e) => {
+              setChangedPassword(e.target.value);
+            }}
+            id="outlined-basic2"
+            label="New Password"
+            type="password"
+            variant="outlined"
+            fullWidth={true}
+          />
+          <br />
+          <br />
+          <TextField
+            onChange={(e) => {
+              setConform(e.target.value);
+            }}
+            id="outlined-basic3"
+            label="Conform Password"
+            type="password"
+            variant="outlined"
+            fullWidth={true}
+          />
+          <br />
+          <br />
+          <Button
+            variant="outlined"
+            onClick={async () => {
+              if (changedPassword === conform) {
+                const response = await axios.post(BACKEND_URL + "", {
+                  customerID: customerID,
+                  currentPassword: currentpassword,
+                  updatePassword: conform,
+                });
+                const data = response.data;
+                localStorage.setItem("token", data.token);
+                window.location = "/";
+              } else {
+                alert("Password Mismatch");
+              }
             }}
           >
-            <TextField
-              disabled
-              id="outlined-disabled"
-              label="Email"
-              defaultValue={user.username}
-            />
-            <br />
-            <br />
-            <TextField
-              onChange={(e) => {
-                setcurrentpassword(e.target.value);
-              }}
-              id="outlined-basic1"
-              label="Current Password"
-              type="password"
-              variant="outlined"
-              fullWidth={true}
-            />
-            <br />
-            <br />
-            <TextField
-              onChange={(e) => {
-                setChangedPassword(e.target.value);
-              }}
-              id="outlined-basic2"
-              label="New Password"
-              type="password"
-              variant="outlined"
-              fullWidth={true}
-            />
-            <br />
-            <br />
-            <TextField
-              onChange={(e) => {
-                setConform(e.target.value);
-              }}
-              id="outlined-basic3"
-              label="Conform Password"
-              type="password"
-              variant="outlined"
-              fullWidth={true}
-            />
-            <br />
-            <br />
-            <Button
-              variant="outlined"
-              onClick={async () => {
-                if (changedPassword === conform) {
-                  const response = await axios.post(BACKEND_URL + "", {
-                    customerID: customerID,
-                    currentPassword: currentpassword,
-                    updatePassword: conform,
-                  });
-                  const data = response.data;
-                  localStorage.setItem("token", data.token);
-                  window.location = "/";
-                } else {
-                  alert("Password Mismatch");
-                }
-              }}
-            >
-              Update Password
-            </Button>
-          </Card>
-        </div>
+            Update Password
+          </Button>
+        </Card>
       </div>
     );
+  } else {
+    useEffect(() => {
+      alert("Login to see Account details");
+      navigate("/shophub/login/");
+    });
   }
 }
 export default MyAccount;

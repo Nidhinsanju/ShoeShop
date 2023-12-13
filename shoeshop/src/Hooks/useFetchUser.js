@@ -14,7 +14,7 @@ export default function useFetchUser() {
         const value = { CustomerId: CustomerID };
 
         if (!token) {
-          console.log(token),"1";
+          console.log(token), "1";
         } else {
           // console.log(JSON.stringify(value));
           const res = await axios.post(
@@ -31,6 +31,7 @@ export default function useFetchUser() {
             const newData = res.data.user;
             setUser(newData);
           } else {
+            navigate("/login/");
             console.log("server error with status", res.status);
           }
         }
