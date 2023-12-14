@@ -32,12 +32,11 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({ message: "Logged in successfully hi", token, user, CustomerID });
+    res.json({ message: "Logged in successfully ", token, CustomerID });
   } else {
     res.status(403).json({ message: "Invalid username or password" });
   }
 });
-
 
 router.get("/products", async (req, res) => {
   const products = await Product.find({});
@@ -54,31 +53,6 @@ router.post("/me", authenticateJwt, async (req, res) => {
       message: "internal server error1",
       error,
     });
-  }
-});
-
-// router.post("/me2", async (req, res) => {
-//   try {
-//     console.log(req);
-//     const CustomerId = req.body.CustomerId;
-//     const user = await User.findOne({ CustomerId });
-//     console.log(user);
-//     res.status(200).json({ user });
-//   } catch (error) {
-//     res.status(403).json({
-//       message: "internal server error",
-//       error,
-//     });
-//   }
-// });
-
-router.post("/mycart", authenticateJwt, async (req, res) => {
-  try {
-    const CustomerId = req.body.CustomerId;
-    const cart = await Cart.find({ CustomerId });
-    res.status(200).json({ cart });
-  } catch (error) {
-    res.status(403).json("internal server errror");
   }
 });
 
@@ -101,7 +75,7 @@ router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
       const newProduct = new Product(product);
       cart.products.push(newProduct);
       await cart.save();
-      res.json({ message: "Product added to Cart" });
+      res.status(200).json({ message: "Product added to Cart" });
       await user.save();
     } else {
       res.status(403).json({ message: "Product not found" });
@@ -113,7 +87,6 @@ router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
   }
 });
 
-
 router.post("/cart", authenticateJwt, async (req, res) => {
   try {
     const CustomerId = req.body.CustomerId;
@@ -121,12 +94,12 @@ router.post("/cart", authenticateJwt, async (req, res) => {
     if (user) {
       const cart = await Cart.findOne({ CustomerId });
       if (cart) {
-        res.status(403).json({ message: "cart found", cart });
+        res.status(200).json({ message: "cart found", cart });
         await cart.save();
       } else {
         const newcart = new Cart({ CustomerId });
         await newcart.save();
-        res.status(200).json({ message: "new cart created", CustomerId });
+        res.status(200).json({ message: "new cart created", newcart });
       }
     } else {
       res.status(200).json({ message: "No user found" });

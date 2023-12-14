@@ -14,9 +14,8 @@ export default function useFetchUser() {
         const value = { CustomerId: CustomerID };
 
         if (!token) {
-          console.log(token), "1";
+          console.log(token);
         } else {
-          // console.log(JSON.stringify(value));
           const res = await axios.post(
             BACKEND_URL + "/user/me",
             JSON.stringify(value),
@@ -32,11 +31,12 @@ export default function useFetchUser() {
             setUser(newData);
           } else {
             navigate("/login/");
-            console.log("server error with status", res.status);
+            console.log(res.status);
           }
         }
       } catch (error) {
-        console.log("error in catch", error);
+        navigate("/shophub/error");
+        console.log(error);
       }
     };
     fetchUser();

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../Constents/api";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function useFetchProduct() {
+  const navigate = useNavigate;
   const [product, setProducts] = useState([]);
   useEffect(() => {
     try {
@@ -11,13 +13,16 @@ export default function useFetchProduct() {
         res.json().then((data) => {
           // if (data.products === string) {
           setProducts(data.products);
-          console.log(data);
+
           // }
         });
       });
     } catch (error) {
-      alert("Failed to fetch");
-      console.log(error);
+      useEffect(() => {
+        alert("Failed to fetch");
+        navigate("/shophub/error");
+        console.log(error);
+      });
     }
   }, []);
 
