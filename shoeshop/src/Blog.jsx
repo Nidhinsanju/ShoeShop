@@ -35,23 +35,6 @@ function Blog() {
                 alt="shoping bag"
               />
             </button>
-            <button
-              style={{
-                maxHeight: "50px",
-                maxWidth: "60px",
-                borderRadius: "20px",
-                marginLeft: "165px",
-              }}
-              onClick={() => {
-                navigate("/shophub/cart/");
-              }}
-            >
-              <img
-                style={{ maxHeight: "20px" }}
-                src="https://www.svgrepo.com/show/521840/shopping-bag.svg"
-                alt="shoping bag"
-              />
-            </button>
             <div>
               <h3
                 style={{

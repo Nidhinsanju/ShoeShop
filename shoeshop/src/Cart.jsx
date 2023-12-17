@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
-import useFetchUser from "./Hooks/useFetchUser";
 import { BACKEND_URL } from "./Constents/api";
 
 //1.first check the user logged in or not

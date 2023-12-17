@@ -80,6 +80,7 @@ function Shop() {
                 ? product.filter((p) => p.ProductID === ID)[0].ProductID
                 : null;
               setID(product.ProductID);
+              window.sharedFunction();
               navigate("/shophub/cart/");
             }}
           >
@@ -159,23 +160,6 @@ function Shop() {
                   borderRadius: "20px",
                   marginLeft: "10px",
                   marginRight: "85px",
-                }}
-                onClick={() => {
-                  navigate("/shophub/cart/");
-                }}
-              >
-                <img
-                  src="https://www.svgrepo.com/show/521840/shopping-bag.svg"
-                  style={{ maxHeight: "20px" }}
-                />
-              </button>
-              <button
-                style={{
-                  maxHeight: "50px",
-                  maxWidth: "60px",
-                  borderRadius: "20px",
-                  marginLeft: "85px",
-                  marginRight: "10px",
                 }}
                 onClick={() => {
                   const orderID = Math.floor(Math.random() * 10000);

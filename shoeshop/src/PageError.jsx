@@ -8,9 +8,8 @@ function PageError() {
           alignItems: "center ",
         }}
       >
-        Sorry no information available
+        Unexpected Error Occured
       </h1>
-
       <img
         style={{
           display: "flex",

@@ -81,7 +81,7 @@ function MyAccount() {
             variant="outlined"
             onClick={async () => {
               if (changedPassword === conform) {
-                const response = await axios.post(BACKEND_URL + "", {
+                const response = await axios.post(BACKEND_URL + "/user/me", {
                   customerID: customerID,
                   currentPassword: currentpassword,
                   updatePassword: conform,
