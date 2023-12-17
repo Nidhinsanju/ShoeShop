@@ -11,10 +11,7 @@ export default function useFetchProduct() {
         method: "Get",
       }).then((res) => {
         res.json().then((data) => {
-          // if (data.products === string) {
           setProducts(data.products);
-
-          // }
         });
       });
     } catch (error) {

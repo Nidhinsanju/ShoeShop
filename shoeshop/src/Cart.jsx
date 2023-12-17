@@ -19,16 +19,18 @@ function Cart() {
     });
   } else {
     const value = JSON.stringify({ CustomerId: CustomerId });
-    fetch(BACKEND_URL + "/user/cart/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: value,
-    }).then((res) => {
-      res.json().then((data) => {
-        setProducts(data.cart.products);
+    useEffect(() => {
+      fetch(BACKEND_URL + "/user/cart/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: value,
+      }).then((res) => {
+        res.json().then((data) => {
+          setProducts(data.cart.products);
+        });
       });
     });
 

@@ -80,7 +80,7 @@ function Shop() {
                 ? product.filter((p) => p.ProductID === ID)[0].ProductID
                 : null;
               setID(product.ProductID);
-              window.sharedFunction();
+              window.sharedFunction(ID);
               navigate("/shophub/cart/");
             }}
           >
