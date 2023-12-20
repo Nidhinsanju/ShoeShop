@@ -2,9 +2,12 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import useFetchProduct from "./Hooks/usefetchproduct";
+import sharedFunction from "./Constents/onclickadd";
 
 function Dashboard() {
   const navigate = useNavigate();
+
+  //Gets the products using Custom Hooks
   const [products, setProducts] = useFetchProduct();
 
   return (
@@ -45,9 +48,9 @@ function Dashboard() {
             <Button
               variant="contained"
               size="medium"
-              onClick={() => {
-                navigate("/shophub/cart/");
-                window.sharedFunction(product.ProductID);
+              onClick={async () => {
+                window.sharedFunction(product.ProductID); //Sends the Product ID to the cart
+                navigate("/shophub/cart/"); //Navigates to the product cart
               }}
             >
               Add to cart

@@ -16,6 +16,8 @@ function MyAccount() {
   const [user, setUser] = useFetchUser();
   const token = localStorage.getItem("token");
 
+  
+
   if (token !== "null") {
     return (
       <div
@@ -37,7 +39,7 @@ function MyAccount() {
             disabled
             id="outlined-disabled"
             label="Email"
-            defaultValue={user.username}
+            defaultValue={JSON.stringify(user.username)}
           />
           <br />
           <br />

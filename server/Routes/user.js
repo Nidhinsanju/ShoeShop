@@ -87,6 +87,34 @@ router.post("/addproduct/:productId", authenticateJwt, async (req, res) => {
   }
 });
 
+router.post("/deleteproduct/:productId", authenticateJwt, async (req, res) => {
+  const CustomerId = req.body.CustomerId;
+  try {
+    const user = await User.findOne({ CustomerId });
+    if (user) {
+      const cart = await Cart.findOne({ CustomerId });
+      if (cart.products.length > 0) {
+        const product = await Product.findOne({
+          ProductID: req.params.productId,
+        });
+        const updatedProducts = cart.products.filter(
+          (p) => p.ProductID !== product.ProductID
+        );
+        cart.products = updatedProducts;
+        await cart.save();
+        res.status(200).json({ message: "Product Deleted from Cart" });
+        await user.save();
+      } else {
+        res.status(404).json({ message: "No Product in cart" });
+      }
+    } else {
+      res.status(403).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(403).json({ message: "internal server error", error });
+  }
+});
+
 router.post("/cart", authenticateJwt, async (req, res) => {
   try {
     const CustomerId = req.body.CustomerId;

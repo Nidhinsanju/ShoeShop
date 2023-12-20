@@ -1,3 +1,5 @@
+//This array contains the title to be shown in the app bar with its link 
+
 export const pages = [
   {
     title: "Shop",
